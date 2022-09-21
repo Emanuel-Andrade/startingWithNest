@@ -15,30 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const common_1 = require("@nestjs/common");
 const product_model_1 = require("./product.model");
+const product_service_1 = require("./product.service");
 let Product = class Product {
-    constructor() {
-        this.book = [
-            new product_model_1.ProductModel('Código Limpo', 74.3, 'LIV0011'),
-            new product_model_1.ProductModel('Iniciando com TDD', 24.3, 'LIV0071'),
-            new product_model_1.ProductModel('A história da Intenet', 51.0, 'LIV0011'),
-        ];
+    constructor(ProductService) {
+        this.ProductService = ProductService;
     }
     getAll() {
-        return this.book;
+        return this.ProductService.getAll();
     }
     getOne(params) {
-        return this.book[params.id - 1];
+        return this.ProductService.getOne(params.id);
     }
     create(product) {
-        this.book.push(product);
-        return this.book;
+        return this.ProductService.create(product);
     }
     update(product, params) {
-        this.book[params.id - 1] = product;
-        return this.book;
+        return this.ProductService.update(product, params.id);
     }
     delete(params) {
-        return this.book.filter((item, index) => index != params.id - 1);
+        return this.ProductService.delete(params.id);
     }
 };
 __decorate([
@@ -77,7 +72,8 @@ __decorate([
     __metadata("design:returntype", Array)
 ], Product.prototype, "delete", null);
 Product = __decorate([
-    (0, common_1.Controller)('produtos')
+    (0, common_1.Controller)('produtos'),
+    __metadata("design:paramtypes", [product_service_1.ProductService])
 ], Product);
 exports.Product = Product;
 //# sourceMappingURL=product.controller.js.map

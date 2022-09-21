@@ -1,6 +1,8 @@
 import { ProductModel } from './product.model';
+import { ProductService } from './product.service';
 export declare class Product {
-    book: ProductModel[];
+    private ProductService;
+    constructor(ProductService: ProductService);
     getAll(): ProductModel[];
     getOne(params: any): ProductModel;
     create(product: ProductModel): ProductModel[];
