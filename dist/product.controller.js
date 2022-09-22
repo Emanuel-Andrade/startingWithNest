@@ -40,21 +40,21 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], Product.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", product_model_1.ProductModel)
+    __metadata("design:returntype", Promise)
 ], Product.prototype, "getOne", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [product_model_1.ProductModel]),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], Product.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(':id'),
@@ -62,14 +62,14 @@ __decorate([
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [product_model_1.ProductModel, Object]),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], Product.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Array)
+    __metadata("design:returntype", Promise)
 ], Product.prototype, "delete", null);
 Product = __decorate([
     (0, common_1.Controller)('produtos'),

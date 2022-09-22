@@ -1,29 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { ProductModel } from './product.model';
 
 @Injectable()
 export class ProductService {
-  book: ProductModel[] = [];
-
-  getAll(): ProductModel[] {
-    return this.book;
+  constructor(@InjectModel(ProductModel) private model: typeof ProductModel) {}
+  async getAll(): Promise<ProductModel[]> {
+    return this.model.findAll();
   }
 
-  getOne(params): ProductModel {
-    return this.book[params.id - 1];
+  async getOne(params): Promise<ProductModel> {
+    return this.model.findByPk(params);
   }
 
-  create(product: ProductModel): ProductModel[] {
-    this.book.push(product);
-    return this.book;
+  async create(product: ProductModel): Promise<ProductModel | string> {
+    if (typeof product !== typeof ProductModel) return 'body errado!';
+    this.model.create(product);
+    return product;
   }
 
-  update(product: ProductModel, params): ProductModel[] {
-    this.book[params.id - 1] = product;
-    return this.book;
+  async update(product: ProductModel, params): Promise<ProductModel | string> {
+    console.log(typeof product);
+    console.log(typeof ProductModel);
+    if (typeof product !== typeof ProductModel) return 'body errado!';
+    await this.model.update(product, { where: params });
+    return this.getOne(params);
   }
 
-  delete(params): ProductModel[] {
-    return this.book.filter((item, index) => index != params.id - 1);
+  async delete(params): Promise<ProductModel[]> {
+    this.model.destroy({
+      where: params,
+    });
+    return this.getAll();
   }
 }

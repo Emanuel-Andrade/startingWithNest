@@ -3,9 +3,9 @@ import { ProductService } from './product.service';
 export declare class Product {
     private ProductService;
     constructor(ProductService: ProductService);
-    getAll(): ProductModel[];
-    getOne(params: any): ProductModel;
-    create(product: ProductModel): ProductModel[];
-    update(product: ProductModel, params: any): ProductModel[];
-    delete(params: any): ProductModel[];
+    getAll(): Promise<ProductModel[]>;
+    getOne(params: any): Promise<ProductModel>;
+    create(product: ProductModel): Promise<ProductModel | string>;
+    update(product: ProductModel, params: any): Promise<ProductModel | string>;
+    delete(params: any): Promise<ProductModel[]>;
 }

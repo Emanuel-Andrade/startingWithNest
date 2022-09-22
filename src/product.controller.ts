@@ -15,27 +15,30 @@ export class Product {
   constructor(private ProductService: ProductService) {}
 
   @Get()
-  getAll(): ProductModel[] {
+  getAll(): Promise<ProductModel[]> {
     return this.ProductService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param() params): ProductModel {
+  getOne(@Param() params): Promise<ProductModel> {
     return this.ProductService.getOne(params.id);
   }
 
   @Post()
-  create(@Body() product: ProductModel): ProductModel[] {
+  create(@Body() product: ProductModel): Promise<ProductModel | string> {
     return this.ProductService.create(product);
   }
 
   @Put(':id')
-  update(@Body() product: ProductModel, @Param() params): ProductModel[] {
+  update(
+    @Body() product: ProductModel,
+    @Param() params,
+  ): Promise<ProductModel | string> {
     return this.ProductService.update(product, params.id);
   }
 
   @Delete(':id')
-  delete(@Param() params): ProductModel[] {
+  delete(@Param() params): Promise<ProductModel[]> {
     return this.ProductService.delete(params.id);
   }
 }
