@@ -13,8 +13,13 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const product_controller_1 = require("./product.controller");
 const product_service_1 = require("./product.service");
-const dotenv_1 = require("dotenv");
-dotenv_1.default.config();
+const ts_dotenv_1 = require("ts-dotenv");
+const product_model_1 = require("./product.model");
+const env = (0, ts_dotenv_1.load)({
+    DATABASE_USERNAME: String,
+    DATABASE_PASSWORD: String,
+    DATABASE_DATABASE: String,
+});
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -22,13 +27,15 @@ AppModule = __decorate([
         imports: [
             sequelize_1.SequelizeModule.forRoot({
                 dialect: 'mysql',
-                host: 'localhost',
+                host: '127.0.0.1',
                 port: 3306,
-                username: process.env.DATABASE_USERNAME,
-                password: process.env.DATABASE_PASSWORD,
-                database: process.env.DATABASE_DATABASE,
-                models: [],
+                username: env.DATABASE_USERNAME,
+                password: env.DATABASE_PASSWORD,
+                database: env.DATABASE_DATABASE,
+                autoLoadModels: true,
+                synchronize: true,
             }),
+            sequelize_1.SequelizeModule.forFeature([product_model_1.ProductModel]),
         ],
         controllers: [app_controller_1.AppController, product_controller_1.Product],
         providers: [app_service_1.AppService, product_service_1.ProductService],

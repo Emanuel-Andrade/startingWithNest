@@ -3,11 +3,7 @@ import { ProductModel } from './product.model';
 
 @Injectable()
 export class ProductService {
-  book: ProductModel[] = [
-    new ProductModel('Código Limpo', 74.3, 'LIV0011'),
-    new ProductModel('Iniciando com TDD', 24.3, 'LIV0071'),
-    new ProductModel('A história da Intenet', 51.0, 'LIV0011'),
-  ];
+  book: ProductModel[] = [];
 
   getAll(): ProductModel[] {
     return this.book;
