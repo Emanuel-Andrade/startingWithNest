@@ -20,7 +20,7 @@ export class Product {
   }
 
   @Get(':id')
-  getOne(@Param() params): Promise<ProductModel> {
+  getOne(@Param() params): Promise<ProductModel | string> {
     return this.ProductService.getOne(params.id);
   }
 
@@ -38,7 +38,7 @@ export class Product {
   }
 
   @Delete(':id')
-  delete(@Param() params): Promise<ProductModel[]> {
+  delete(@Param() params): Promise<ProductModel[] | string> {
     return this.ProductService.delete(params.id);
   }
 }

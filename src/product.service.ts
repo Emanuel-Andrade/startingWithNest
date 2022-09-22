@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ProductModel } from './product.model';
+import Validation from './product.validation';
 
 @Injectable()
 export class ProductService {
@@ -9,27 +10,31 @@ export class ProductService {
     return this.model.findAll();
   }
 
-  async getOne(params): Promise<ProductModel> {
+  async getOne(params): Promise<ProductModel | string> {
+    const response = await Validation.isIdProduct(params);
+    if (!response) return 'não foram encontrados livros';
     return this.model.findByPk(params);
   }
 
   async create(product: ProductModel): Promise<ProductModel | string> {
-    if (typeof product !== typeof ProductModel) return 'body errado!';
+    const response = Validation.isProductModel(product);
+    if (response != 'true') return response;
     this.model.create(product);
     return product;
   }
 
   async update(product: ProductModel, params): Promise<ProductModel | string> {
-    console.log(typeof product);
-    console.log(typeof ProductModel);
-    if (typeof product !== typeof ProductModel) return 'body errado!';
-    await this.model.update(product, { where: params });
+    const response = Validation.isProductModel(product);
+    if (response != 'true') return response;
+    await this.model.update(product, { where: { id: params } });
     return this.getOne(params);
   }
 
-  async delete(params): Promise<ProductModel[]> {
+  async delete(params): Promise<ProductModel[] | string> {
+    const response = await Validation.isIdProduct(params);
+    if (!response) return 'não foram encontrados livros';
     this.model.destroy({
-      where: params,
+      where: { id: params },
     });
     return this.getAll();
   }
